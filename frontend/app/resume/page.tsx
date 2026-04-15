@@ -1,96 +1,127 @@
+'use client';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function ResumeBuilder() {
+  const [mode, setMode] = useState<'auto' | 'optimize' | 'tailor'>('auto');
+
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc', fontFamily: 'system-ui, sans-serif' }}>
       
       {/* Navbar */}
       <nav style={{ padding: '20px 40px', backgroundColor: 'white', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Link href="/" style={{ textDecoration: 'none', color: '#1e3a8a', fontSize: '22px', fontWeight: 'bold' }}>📄 Hirvanta AI</Link>
-        <div style={{ display: 'flex', gap: '20px' }}>
-          <Link href="/jobs" style={{ textDecoration: 'none', color: '#4b5563', fontWeight: '500' }}>Find Jobs</Link>
-          <Link href="/pricing" style={{ textDecoration: 'none', color: '#4b5563', fontWeight: '500' }}>Pricing</Link>
-        </div>
+        <Link href="/dashboard" style={{ textDecoration: 'none', color: '#1e3a8a', fontWeight: 'bold' }}>← Dashboard</Link>
+        <div style={{ fontWeight: '900', color: '#111827' }}>📄 Hirvanta AI Builder</div>
       </nav>
 
-      <main style={{ padding: '40px', maxWidth: '900px', margin: '0 auto' }}>
-        <header style={{ marginBottom: '40px' }}>
-          <h1 style={{ fontSize: '32px', fontWeight: '900', color: '#111827', margin: '0 0 10px 0' }}>AI Resume Builder</h1>
-          <p style={{ color: '#4b5563', fontSize: '18px' }}>Create a high-scoring ATS resume in seconds.</p>
+      <main style={{ padding: '40px', maxWidth: '1000px', margin: '0 auto' }}>
+        
+        {/* Header Section */}
+        <header style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <h1 style={{ fontSize: '36px', fontWeight: '900', color: '#111827', margin: '0 0 10px 0' }}>AI Resume Suite</h1>
+          <p style={{ color: '#4b5563', fontSize: '18px' }}>Choose a mode to start building your professional future.</p>
         </header>
 
-        {/* Section 1: Job Description Input */}
-        <section style={{ backgroundColor: 'white', padding: '30px', borderRadius: '16px', border: '1px solid #e5e7eb', marginBottom: '30px' }}>
-          <h3 style={{ margin: '0 0 15px 0', fontSize: '18px', fontWeight: 'bold' }}>1. Paste Job Description</h3>
-          <textarea 
-            placeholder="Paste the job requirements here..." 
-            style={{ width: '100%', height: '150px', padding: '15px', borderRadius: '8px', border: '1px solid #d1d5db', fontFamily: 'inherit', marginBottom: '15px', resize: 'vertical' }}
-          />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <span style={{ color: '#6b7280' }}>OR</span>
-            <button style={{ backgroundColor: '#f3f4f6', border: '1px dashed #9ca3af', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
-              Upload JD (PDF/DOCX)
-            </button>
-          </div>
-        </section>
-
-        {/* Section 2: Choose Resume Mode */}
-        <h3 style={{ margin: '0 0 20px 0', fontSize: '18px', fontWeight: 'bold' }}>2. Choose AI Resume Mode</h3>
-        <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', marginBottom: '40px' }}>
-          
-          <ResumeModeCard 
-            emoji="✨" 
+        {/* Mode Selector Tabs */}
+        <div style={{ display: 'flex', gap: '15px', marginBottom: '40px', flexWrap: 'wrap' }}>
+          <ModeTab 
+            active={mode === 'auto'} 
+            onClick={() => setMode('auto')} 
+            icon="✨" 
             title="Auto Maker" 
-            desc="Enter basic info and let AI generate a full resume." 
+            desc="Build from scratch" 
           />
-          
-          <ResumeModeCard 
-            emoji="🚀" 
-            title="Resume Optimizer" 
-            desc="Upload your old resume and AI will improve it for ATS." 
+          <ModeTab 
+            active={mode === 'optimize'} 
+            onClick={() => setMode('optimize')} 
+            icon="🚀" 
+            title="Optimizer" 
+            desc="Improve old resume" 
           />
-          
-          <ResumeModeCard 
-            emoji="🎯" 
+          <ModeTab 
+            active={mode === 'tailor'} 
+            onClick={() => setMode('tailor')} 
+            icon="🎯" 
             title="JD Tailor" 
-            desc="AI matches your resume perfectly to the job above." 
+            desc="Match a specific job" 
           />
-
         </div>
 
-        <button style={{ 
-          width: '100%', 
-          backgroundColor: '#1e3a8a', 
-          color: 'white', 
-          border: 'none', 
-          padding: '20px', 
-          borderRadius: '12px', 
-          fontSize: '20px', 
-          fontWeight: 'bold', 
-          cursor: 'pointer',
-          boxShadow: '0 4px 6px rgba(30, 58, 138, 0.2)'
-        }}>
-          Generate My AI Resume Now
-        </button>
+        {/* Dynamic Form Area */}
+        <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', border: '1px solid #e5e7eb', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.05)' }}>
+          
+          {mode === 'auto' && (
+            <div style={{ animation: 'fadeIn 0.3s' }}>
+              <h3 style={sectionTitle}>Personal & Professional Info</h3>
+              <div style={gridStyle}>
+                <input type="text" placeholder="Full Name" style={inputStyle} />
+                <input type="text" placeholder="Target Job Title (e.g. Project Engineer)" style={inputStyle} />
+                <textarea placeholder="Tell us about your top 3 achievements..." style={{ ...inputStyle, gridColumn: 'span 2', height: '100px' }} />
+              </div>
+            </div>
+          )}
+
+          {mode === 'optimize' && (
+            <div style={{ animation: 'fadeIn 0.3s', textAlign: 'center' }}>
+              <h3 style={sectionTitle}>ATS Optimization Engine</h3>
+              <div style={uploadBoxStyle}>
+                <span style={{ fontSize: '40px' }}>📤</span>
+                <p>Upload your existing Resume (PDF, DOCX)</p>
+                <button style={secondaryButtonStyle}>Browse Files</button>
+              </div>
+              <p style={{ color: '#6b7280', fontSize: '14px' }}>AI will improve formatting, fix grammar, and enhance skills.</p>
+            </div>
+          )}
+
+          {mode === 'tailor' && (
+            <div style={{ animation: 'fadeIn 0.3s' }}>
+              <h3 style={sectionTitle}>Job Description Matching</h3>
+              <textarea placeholder="Paste the Job Description here..." style={{ ...inputStyle, height: '150px', marginBottom: '20px' }} />
+              <div style={uploadBoxStyle}>
+                <p>Upload your base resume to tailor it</p>
+                <button style={secondaryButtonStyle}>Browse Resume</button>
+              </div>
+            </div>
+          )}
+
+          <button style={mainButtonStyle}>
+            {mode === 'auto' && 'Generate Full Resume'}
+            {mode === 'optimize' && 'Start ATS Optimization'}
+            {mode === 'tailor' && 'Generate Tailored Resume'}
+          </button>
+        </div>
+
       </main>
     </div>
   );
 }
 
-function ResumeModeCard({ emoji, title, desc }) {
+// Sub-components
+function ModeTab({ active, onClick, icon, title, desc }) {
   return (
-    <div style={{ 
-      flex: '1 1 250px', 
-      backgroundColor: 'white', 
-      padding: '25px', 
-      borderRadius: '16px', 
-      border: '1px solid #e5e7eb', 
-      cursor: 'pointer',
-      transition: 'transform 0.2s'
-    }}>
-      <div style={{ fontSize: '30px', marginBottom: '15px' }}>{emoji}</div>
-      <h4 style={{ margin: '0 0 10px 0', fontWeight: 'bold' }}>{title}</h4>
-      <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: '1.4' }}>{desc}</p>
+    <div 
+      onClick={onClick}
+      style={{ 
+        flex: '1 1 250px', 
+        backgroundColor: active ? '#1e3a8a' : 'white', 
+        color: active ? 'white' : '#111827',
+        padding: '20px', 
+        borderRadius: '16px', 
+        border: active ? 'none' : '1px solid #e5e7eb',
+        cursor: 'pointer',
+        transition: '0.2s'
+      }}>
+      <div style={{ fontSize: '24px', marginBottom: '8px' }}>{icon}</div>
+      <div style={{ fontWeight: 'bold', fontSize: '18px' }}>{title}</div>
+      <div style={{ fontSize: '13px', opacity: active ? 0.8 : 0.6 }}>{desc}</div>
     </div>
   );
 }
+
+// Styles
+const sectionTitle = { fontSize: '20px', fontWeight: 'bold', marginBottom: '20px', color: '#111827' };
+const inputStyle = { width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #d1d5db', fontSize: '15px', boxSizing: 'border-box' as 'border-box' };
+const gridStyle = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' };
+const uploadBoxStyle = { border: '2px dashed #d1d5db', padding: '40px', borderRadius: '16px', marginBottom: '20px' };
+const mainButtonStyle = { width: '100%', backgroundColor: '#1e3a8a', color: 'white', border: 'none', padding: '18px', borderRadius: '12px', fontSize: '18px', fontWeight: 'bold', cursor: 'pointer', marginTop: '30px' };
+const secondaryButtonStyle = { backgroundColor: '#f3f4f6', color: '#111827', border: 'none', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', marginTop: '10px' };
