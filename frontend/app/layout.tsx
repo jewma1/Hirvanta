@@ -1,10 +1,18 @@
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Hirvanta",
+  description: "AI Career Platform",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body>
-        <h2 style={{background:"#111",color:"#fff",padding:"10px"}}>Hirvanta</h2>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
