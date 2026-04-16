@@ -3,46 +3,42 @@
 import { useState } from "react";
 
 export default function CoverLetterPage() {
-  const [job, setJob] = useState("");
-  const [company, setCompany] = useState("");
+  const [result, setResult] = useState("");
+
+  const generateCoverLetter = async () => {
+    const res = await fetch(
+      "YOUR_BACKEND_URL/api/ai/cover-letter",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: "Generate professional cover letter",
+        }),
+      }
+    );
+
+    const data = await res.json();
+    setResult(data.text);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="p-6">
 
       <h1 className="text-3xl font-bold mb-6">
-        AI Cover Letter Generator
+        Cover Letter Generator
       </h1>
 
-      <div className="grid grid-cols-2 gap-8">
+      <button
+        onClick={generateCoverLetter}
+        className="bg-blue-600 text-white p-4 rounded-lg mb-6"
+      >
+        Generate Cover Letter
+      </button>
 
-        <div className="bg-white p-6 rounded-xl shadow">
-          <input
-            className="border p-3 w-full mb-3"
-            placeholder="Job Role"
-            value={job}
-            onChange={(e)=>setJob(e.target.value)}
-          />
-
-          <input
-            className="border p-3 w-full mb-3"
-            placeholder="Company"
-            value={company}
-            onChange={(e)=>setCompany(e.target.value)}
-          />
-
-          <button className="bg-blue-600 text-white px-6 py-3 rounded">
-            Generate Cover Letter
-          </button>
-        </div>
-
-        <div className="bg-white p-6 rounded-xl shadow">
-          <p>
-            Dear Hiring Manager,
-            <br/><br/>
-            I am excited to apply for {job} at {company}.
-          </p>
-        </div>
-
+      <div className="bg-white p-6 rounded-xl shadow min-h-[300px]">
+        {result || "AI cover letter will appear here"}
       </div>
 
     </div>
