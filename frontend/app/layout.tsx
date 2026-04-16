@@ -1,61 +1,90 @@
 "use client";
-import React, { useState, useEffect } from 'react';
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState({ name: "Loading...", email: "", initials: ".." });
+import Link from "next/link";
 
-  // REAL LOGIC: Fetching the person who actually signed in
-  useEffect(() => {
-    // In production, this data comes from your Firebase/Auth session
-    const currentUser = {
-      name: "Kunal Sharma", // Dynamic: changes based on login
-      email: "kunal.dev@example.com",
-      initials: "KS"
-    };
-    setUser(currentUser);
-  }, []);
-
-  const menu = [
-    { name: 'Dashboard', icon: '📁', path: '/' },
-    { name: 'Job Finder', icon: '🔍', path: '/jobs' },
-    { name: 'Resume Builder', icon: '📄', path: '/resume' },
-    { name: 'Cover Letter', icon: '✉️', path: '/cover-letter' },
-    { name: 'Interview Coach', icon: '💬', path: '/interview' },
-    { name: 'Career Assistant', icon: '👑', path: '/assistant' },
-    { name: 'Recruiter Messages', icon: '📩', path: '/messages' },
-    { name: 'Job Tracker', icon: '💼', path: '/tracker' },
-    { name: 'Pricing', icon: '💳', path: '/pricing' },
-  ];
-
+export default function HomePage() {
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#F8FAFC' }}>
-      {/* SIDEBAR (The Red Rectangle Area) */}
-      <aside style={{ width: '280px', backgroundColor: '#fff', borderRight: '1px solid #E2E8F0', position: 'fixed', height: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ padding: '24px', fontWeight: '900', fontSize: '22px', color: '#1E3A8A' }}>Hirvanta</div>
-        
-        <nav style={{ flex: 1, padding: '0 16px' }}>
-          {menu.map((item) => (
-            <a key={item.name} href={item.path} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', borderRadius: '10px', textDecoration: 'none', color: '#64748B', fontWeight: '600', marginBottom: '4px' }}>
-              <span>{item.icon}</span> {item.name}
-            </a>
-          ))}
+    <main className="min-h-screen bg-white">
+      
+      {/* Navbar */}
+      <header className="flex justify-between items-center px-8 py-4 border-b">
+        <h1 className="text-xl font-bold text-blue-600">Hirvanta</h1>
+
+        <nav className="flex gap-6 items-center">
+          <Link href="/features">Features</Link>
+          <Link href="/pricing">Pricing</Link>
+          <Link href="/login">Sign In</Link>
+
+          <Link
+            href="/signup"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+          >
+            Try Free
+          </Link>
         </nav>
+      </header>
 
-        {/* DYNAMIC USER PROFILE (No more hardcoded names!) */}
-        <div style={{ padding: '20px', borderTop: '1px solid #F1F5F9' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '40px', height: '40px', backgroundColor: '#1E3A8A', borderRadius: '50%', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700' }}>
-              {user.initials}
-            </div>
-            <div style={{ overflow: 'hidden' }}>
-              <p style={{ fontSize: '14px', fontWeight: '700', margin: 0 }}>{user.name}</p>
-              <p style={{ fontSize: '11px', color: '#94A3B8', margin: 0, textOverflow: 'ellipsis', overflow: 'hidden' }}>{user.email}</p>
-            </div>
-          </div>
-        </div>
-      </aside>
+      {/* Hero */}
+      <section className="text-center py-20 px-6">
+        <h2 className="text-4xl font-bold mb-4">
+          Everything You Need to Land Your Dream Job
+        </h2>
+        <p className="text-gray-600 mb-8">
+          Powerful AI tools designed for modern job seekers
+        </p>
+      </section>
 
-      <main style={{ marginLeft: '280px', flex: 1, padding: '40px' }}>{children}</main>
-    </div>
+      {/* Features Grid */}
+      <section className="grid grid-cols-3 gap-6 px-10 pb-20">
+        
+        <FeatureCard
+          title="AI Resume Builder"
+          desc="Generate ATS optimized resumes"
+          link="/resume"
+        />
+
+        <FeatureCard
+          title="Smart Job Finder"
+          desc="Find matching jobs instantly"
+          link="/jobs"
+        />
+
+        <FeatureCard
+          title="Interview Coach"
+          desc="Practice interviews with AI"
+          link="/interview"
+        />
+
+        <FeatureCard
+          title="Cover Letters"
+          desc="Generate personalized cover letters"
+          link="/career-coach"
+        />
+
+        <FeatureCard
+          title="Job Tracker"
+          desc="Track applications easily"
+          link="/dashboard"
+        />
+
+        <FeatureCard
+          title="Recruiter Messages"
+          desc="Generate recruiter outreach"
+          link="/career-coach"
+        />
+      </section>
+
+    </main>
+  );
+}
+
+function FeatureCard({ title, desc, link }) {
+  return (
+    <Link href={link}>
+      <div className="border p-6 rounded-xl hover:shadow-lg cursor-pointer">
+        <h3 className="font-semibold text-lg mb-2">{title}</h3>
+        <p className="text-gray-600">{desc}</p>
+      </div>
+    </Link>
   );
 }
