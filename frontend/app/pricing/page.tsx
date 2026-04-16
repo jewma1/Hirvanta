@@ -1,47 +1,66 @@
-export default function Pricing() {
-  const plans = [
-    { name: 'Free', price: '0', sub: 'Active' },
-    { name: 'Weekly', price: '7', sub: '/week' },
-    { name: 'Monthly', price: '99', sub: '/mo', popular: true },
-    { name: 'Lifetime', price: '299', sub: 'once', best: true }
-  ];
+"use client";
 
+export default function PricingPage() {
   return (
-    <div style={{ textAlign: 'center' }}>
-      <h1 style={{ fontSize: '36px', fontWeight: '900' }}>Upgrade to Hirvanta Pro</h1>
-      
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginTop: '40px' }}>
-        {plans.map(plan => (
-          <div key={plan.name} style={{ backgroundColor: '#fff', padding: '32px', borderRadius: '24px', border: plan.popular ? '2px solid #2563EB' : '1px solid #E2E8F0', position: 'relative' }}>
-            {plan.best && <span style={{ position: 'absolute', top: '-12px', left: '25%', backgroundColor: '#10B981', color: '#fff', padding: '4px 12px', borderRadius: '20px', fontSize: '10px', fontWeight: '900' }}>BEST VALUE</span>}
-            <h3 style={{ margin: 0 }}>{plan.name}</h3>
-            <h2 style={{ fontSize: '32px', margin: '15px 0' }}>₹{plan.price}<span style={{ fontSize: '16px', color: '#94A3B8' }}>{plan.sub}</span></h2>
-            <button style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none', backgroundColor: '#1E3A8A', color: '#fff', fontWeight: '700', cursor: 'pointer' }}>Get Started</button>
-          </div>
-        ))}
+    <div className="min-h-screen bg-gray-50 p-8">
+
+      <h1 className="text-3xl font-bold text-center mb-10">
+        Simple Pricing
+      </h1>
+
+      <div className="grid grid-cols-3 gap-8">
+
+        {/* Free */}
+        <div className="bg-white p-6 rounded-xl shadow">
+          <h2 className="text-xl font-semibold mb-3">Free</h2>
+          <p className="text-3xl font-bold mb-4">₹0</p>
+
+          <ul className="mb-6 space-y-2 text-gray-600">
+            <li>✔ Resume Builder</li>
+            <li>✔ Job Finder</li>
+            <li>✔ Interview Coach</li>
+          </ul>
+
+          <button className="bg-blue-600 text-white w-full py-2 rounded">
+            Get Started
+          </button>
+        </div>
+
+        {/* Pro */}
+        <div className="bg-white p-6 rounded-xl shadow border-2 border-blue-600">
+          <h2 className="text-xl font-semibold mb-3">Pro</h2>
+          <p className="text-3xl font-bold mb-4">₹499</p>
+
+          <ul className="mb-6 space-y-2 text-gray-600">
+            <li>✔ Everything in Free</li>
+            <li>✔ AI Career Assistant</li>
+            <li>✔ Recruiter Messages</li>
+            <li>✔ Job Tracker</li>
+          </ul>
+
+          <button className="bg-blue-600 text-white w-full py-2 rounded">
+            Upgrade
+          </button>
+        </div>
+
+        {/* Premium */}
+        <div className="bg-white p-6 rounded-xl shadow">
+          <h2 className="text-xl font-semibold mb-3">Premium</h2>
+          <p className="text-3xl font-bold mb-4">₹999</p>
+
+          <ul className="mb-6 space-y-2 text-gray-600">
+            <li>✔ Everything in Pro</li>
+            <li>✔ Unlimited AI</li>
+            <li>✔ Priority Support</li>
+          </ul>
+
+          <button className="bg-blue-600 text-white w-full py-2 rounded">
+            Go Premium
+          </button>
+        </div>
+
       </div>
 
-      <table style={{ width: '100%', marginTop: '60px', borderCollapse: 'collapse', backgroundColor: '#fff', borderRadius: '16px', overflow: 'hidden', border: '1px solid #E2E8F0' }}>
-        <thead style={{ backgroundColor: '#F8FAFC' }}>
-          <tr style={{ textAlign: 'left' }}>
-            <th style={{ padding: '20px' }}>Premium Features</th>
-            <th style={{ padding: '20px' }}>Free</th>
-            <th style={{ padding: '20px' }}>Lifetime</th>
-          </tr>
-        </thead>
-        <tbody style={{ textAlign: 'left' }}>
-          <tr style={{ borderTop: '1px solid #F1F5F9' }}>
-            <td style={{ padding: '16px 20px' }}>Resume Generations</td>
-            <td style={{ padding: '16px 20px' }}>3</td>
-            <td style={{ padding: '16px 20px', fontWeight: '700', color: '#10B981' }}>Unlimited</td>
-          </tr>
-          <tr style={{ borderTop: '1px solid #F1F5F9' }}>
-            <td style={{ padding: '16px 20px' }}>Voice Mock Interviews</td>
-            <td style={{ padding: '16px 20px' }}>2</td>
-            <td style={{ padding: '16px 20px', fontWeight: '700', color: '#10B981' }}>Unlimited</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   );
 }
