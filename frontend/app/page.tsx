@@ -10,23 +10,28 @@ export default function Home() {
       <div className="flex justify-between items-center px-10 py-4 border-b">
         <h1 className="text-xl font-bold">Hirvanta</h1>
 
-        <div className="flex gap-6">
+        <div className="flex gap-6 text-gray-600">
           <span>Features</span>
           <span>How it Works</span>
           <span>Pricing</span>
         </div>
 
-        <div className="flex gap-4">
-          <Link href="/login">Sign In</Link>
-          <Link href="/dashboard" className="bg-blue-600 text-white px-4 py-2 rounded">
+        <div className="flex gap-4 items-center">
+          <Link href="/login" className="text-gray-700">
+            Sign In
+          </Link>
+
+          <Link
+            href="/login"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+          >
             Try Free →
           </Link>
         </div>
       </div>
 
-      {/* Hero Section */}
+      {/* Hero */}
       <div className="text-center mt-20 px-4">
-
         <p className="text-sm bg-gray-100 inline-block px-3 py-1 rounded-full">
           ⚡ AI-Powered Career Assistant
         </p>
@@ -39,13 +44,17 @@ export default function Home() {
           From Resume to Offer Letter
         </h2>
 
-        <p className="text-gray-600 mt-6 max-w-xl mx-auto">
+        <p className="text-gray-600 mt-6 max-w-2xl mx-auto">
           Stop spending hours on applications. Hirvanta uses AI to build resumes,
-          write cover letters, prepare for interviews, and find jobs — all from a single job description.
+          write cover letters, prepare for interviews, and find jobs — all from a
+          single job description.
         </p>
 
         <div className="flex justify-center gap-4 mt-8">
-          <Link href="/dashboard" className="bg-blue-600 text-white px-6 py-3 rounded-lg">
+          <Link
+            href="/login"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg"
+          >
             Try Free — No Credit Card →
           </Link>
 
@@ -57,9 +66,7 @@ export default function Home() {
         <p className="text-sm text-gray-400 mt-4">
           Free trial includes 2 resumes, 1 interview, and unlimited job search
         </p>
-
       </div>
-
     </div>
   );
 }
