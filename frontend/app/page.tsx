@@ -2,41 +2,71 @@ import React from 'react';
 
 export default function HomePage() {
   return (
-    <div style={{ textAlign: 'center', padding: '80px 5%' }}>
+    <div style={{ textAlign: 'center', padding: '100px 5%' }}>
+      {/* BADGE */}
       <div style={{ 
         display: 'inline-block', 
-        backgroundColor: '#e0e7ff', 
-        color: '#4338ca', 
-        padding: '6px 16px', 
-        borderRadius: '20px', 
+        backgroundColor: '#f0f7ff', 
+        color: '#1e40af', 
+        padding: '8px 20px', 
+        borderRadius: '30px', 
         fontSize: '14px', 
-        fontWeight: '600',
-        marginBottom: '20px'
+        fontWeight: '700',
+        marginBottom: '24px',
+        border: '1px solid #dbeafe'
       }}>
-        ⚡ AI-Powered Career Assistant
+        🚀 AI-Powered Career Assistant
       </div>
       
-      <h1 style={{ fontSize: '56px', fontWeight: '900', color: '#111827', marginBottom: '20px', lineHeight: '1.1' }}>
+      {/* MAIN HEADLINE */}
+      <h1 style={{ fontSize: '64px', fontWeight: '900', color: '#0f172a', marginBottom: '24px', lineHeight: '1.1' }}>
         Your AI Career Copilot <br/>
-        <span style={{ color: '#4f46e5' }}>From Resume to Offer Letter</span>
+        <span style={{ 
+          background: 'linear-gradient(90deg, #1e3a8a, #3b82f6)', 
+          WebkitBackgroundClip: 'text', 
+          WebkitTextFillColor: 'transparent' 
+        }}>
+          From Resume to Offer Letter
+        </span>
       </h1>
       
-      <p style={{ fontSize: '18px', color: '#4b5563', maxWidth: '700px', margin: '0 auto 40px auto' }}>
+      {/* SUBTEXT */}
+      <p style={{ fontSize: '20px', color: '#475569', maxWidth: '800px', margin: '0 auto 48px auto', lineHeight: '1.6' }}>
         Stop spending hours on applications. Hirvanta uses AI to build resumes, write cover letters, 
         prepare for interviews, and find jobs — all from a single job description.
       </p>
 
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
-        <button style={{ backgroundColor: '#1e3a8a', color: 'white', padding: '15px 30px', borderRadius: '8px', fontSize: '18px', fontWeight: '700', border: 'none', cursor: 'pointer' }}>
+      {/* CALL TO ACTION BUTTONS */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+        <button style={{ 
+          backgroundColor: '#1e3a8a', 
+          color: 'white', 
+          padding: '18px 36px', 
+          borderRadius: '12px', 
+          fontSize: '18px', 
+          fontWeight: '800', 
+          border: 'none', 
+          cursor: 'pointer',
+          boxShadow: '0 10px 15px rgba(30, 58, 138, 0.2)'
+        }}>
           Start Your Free Trial →
         </button>
-        <button style={{ backgroundColor: 'white', color: '#111827', padding: '15px 30px', borderRadius: '8px', fontSize: '18px', fontWeight: '700', border: '1px solid #e5e7eb', cursor: 'pointer' }}>
+        <button style={{ 
+          backgroundColor: '#ffffff', 
+          color: '#1e3a8a', 
+          padding: '18px 36px', 
+          borderRadius: '12px', 
+          fontSize: '18px', 
+          fontWeight: '800', 
+          border: '2px solid #e2e8f0', 
+          cursor: 'pointer' 
+        }}>
           Upload Job Description
         </button>
       </div>
 
-      <p style={{ marginTop: '20px', color: '#9ca3af', fontSize: '14px' }}>
-        Free trial includes 3 resumes, 2 cover letters, and unlimited job search.
+      <p style={{ marginTop: '24px', color: '#94a3b8', fontSize: '15px', fontWeight: '500' }}>
+        No credit card required. Free trial includes 3 premium resumes.
       </p>
     </div>
   );
