@@ -1,26 +1,56 @@
-export default function InterviewPage() {
-  return (
-    <div style={{ maxWidth: '900px' }}>
-      <h1 style={{ fontSize: '32px', fontWeight: '800' }}>AI Interview Coach</h1>
-      <p style={{ color: '#64748B', marginBottom: '32px' }}>Role-specific practice with real-time feedback.</p>
+"use client";
 
-      <div style={{ backgroundColor: '#fff', padding: '32px', borderRadius: '20px', border: '1px solid #E2E8F0' }}>
-        <p style={{ fontWeight: '700', marginBottom: '16px' }}>Interview Mode</p>
-        <div style={{ display: 'flex', gap: '20px', marginBottom: '30px' }}>
-          <button style={{ flex: 1, padding: '20px', border: '2px solid #1E3A8A', borderRadius: '12px', background: '#F8FAFC', fontWeight: '700' }}>⌨️ Chat Interview</button>
-          <button style={{ flex: 1, padding: '20px', border: '1px solid #E2E8F0', borderRadius: '12px', background: '#fff', color: '#64748B' }}>🎙️ Voice Interview</button>
+import { useState } from "react";
+
+export default function InterviewPage() {
+  const [question, setQuestion] = useState(
+    "Tell me about yourself"
+  );
+  const [answer, setAnswer] = useState("");
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-8">
+
+      <h1 className="text-3xl font-bold mb-6">
+        AI Interview Coach
+      </h1>
+
+      <div className="grid grid-cols-2 gap-8">
+
+        {/* Question */}
+        <div className="bg-white p-6 rounded-xl shadow">
+          <h2 className="font-semibold mb-3">
+            Interview Question
+          </h2>
+
+          <p className="mb-4">{question}</p>
+
+          <button className="bg-blue-600 text-white px-4 py-2 rounded">
+            Next Question
+          </button>
         </div>
 
-        <label style={{ fontWeight: '700', display: 'block', marginBottom: '8px' }}>Role / Position</label>
-        <input type="text" placeholder="e.g. Mechanical Project Engineer" style={{ width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid #E2E8F0', marginBottom: '24px' }} />
+        {/* Answer */}
+        <div className="bg-white p-6 rounded-xl shadow">
+          <h2 className="font-semibold mb-3">
+            Your Answer
+          </h2>
 
-        <label style={{ fontWeight: '700', display: 'block', marginBottom: '8px' }}>Job Description</label>
-        <textarea placeholder="Paste requirements here..." style={{ width: '100%', height: '160px', padding: '14px', borderRadius: '10px', border: '1px solid #E2E8F0', marginBottom: '30px' }} />
+          <textarea
+            className="border p-3 w-full mb-3"
+            rows={6}
+            placeholder="Type your answer..."
+            value={answer}
+            onChange={(e)=>setAnswer(e.target.value)}
+          />
 
-        <button style={{ backgroundColor: '#1E3A8A', color: '#fff', padding: '16px 40px', borderRadius: '10px', border: 'none', fontWeight: '800', cursor: 'pointer' }}>
-          Start AI Coaching Session →
-        </button>
+          <button className="bg-green-600 text-white px-4 py-2 rounded">
+            Get Feedback
+          </button>
+        </div>
+
       </div>
+
     </div>
   );
 }
