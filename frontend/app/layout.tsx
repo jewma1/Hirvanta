@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import React from "react";
 
-// This is the "ID Card" for your website on Google and LinkedIn
 export const metadata: Metadata = {
   title: "Hirvanta | AI Career Copilot",
   description: "Transforming resumes into offer letters with AI.",
@@ -16,95 +15,81 @@ export default function RootLayout({
     <html lang="en">
       <body style={{ margin: 0, fontFamily: 'sans-serif', backgroundColor: '#fafafa' }}>
         
-        {/* --- PROFESSIONAL HEADER START --- */}
+        {/* --- PROFESSIONAL STARTUP HEADER --- */}
         <nav style={{
           display: 'flex',
           justifyContent: 'space-between',
-          padding: '12px 5%',
+          padding: '10px 5%',
           alignItems: 'center',
           backgroundColor: '#ffffff',
           borderBottom: '1px solid #e5e7eb',
           position: 'sticky',
           top: 0,
           zIndex: 1000,
-          boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+          boxShadow: '0 2px 10px rgba(0,0,0,0.03)'
         }}>
           
-          {/* THE NEW BRAND LOGO DESIGN (Icon + Text) */}
-          <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '12px' }}>
+          {/* THE EXACT CIRCUIT-H LOGO DESIGN */}
+          <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '10px' }}>
             
-            {/* GEOMETRIC ARROW MONOGRAM */}
-            <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* SVG LOGO: CIRCUIT H + ARROW */}
+            <svg width="48" height="48" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{ stopColor: '#3b82f6', stopOpacity: 1 }} />
-                  <stop offset="100%" style={{ stopColor: '#1e3a8a', stopOpacity: 1 }} />
+                <linearGradient id="hGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" style={{ stopColor: '#0033ff', stopOpacity: 1 }} /> {/* Deep Blue */}
+                  <stop offset="100%" style={{ stopColor: '#00d4ff', stopOpacity: 1 }} /> {/* Bright Cyan */}
                 </linearGradient>
               </defs>
-              <path d="M15 70 L35 30 L45 30 L25 70 Z" fill="url(#logoGradient)" />
-              <path d="M40 70 L60 30 L70 30 L50 70 Z" fill="url(#logoGradient)" />
-              <path d="M65 70 L85 30 L95 30 L75 70 Z" fill="url(#logoGradient)" />
+              
+              {/* Left Side: Circuit Pillar */}
+              <path d="M25 25 V75 H35 V25 Z" fill="url(#hGradient)" />
+              <circle cx="25" cy="40" r="3" fill="white" />
+              <circle cx="25" cy="55" r="3" fill="white" />
+              <path d="M25 40 H30 V55 H25" stroke="white" strokeWidth="1.5" fill="none" />
+              
+              {/* Middle & Right: The Growth Arrow */}
+              <path d="M35 50 H55 L75 25" stroke="url(#hGradient)" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M65 25 H75 V35" stroke="url(#hGradient)" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M55 75 V55 L75 55 V75 Z" fill="url(#hGradient)" opacity="0.8" />
             </svg>
 
-            {/* BRAND NAME & TAGLINE */}
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span style={{ 
-                fontWeight: '900', 
-                fontSize: '24px', 
-                color: '#1e3a8a', 
-                letterSpacing: '-1px',
-                textTransform: 'uppercase',
-                lineHeight: '1'
-              }}>
-                Hirvanta
-              </span>
-              <span style={{ 
-                fontWeight: '600', 
-                fontSize: '9px', 
-                color: '#6b7280', 
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                marginTop: '2px'
-              }}>
-                Your Career Copilot
-              </span>
-            </div>
+            {/* BRAND TEXT */}
+            <span style={{ 
+              fontWeight: '800', 
+              fontSize: '28px', 
+              color: '#1e3a8a', 
+              letterSpacing: '-0.8px',
+              fontFamily: 'system-ui, sans-serif'
+            }}>
+              Hirvanta
+            </span>
           </div>
 
-          {/* NAVIGATION MENU */}
-          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-            <a href="/" style={{ textDecoration: 'none', color: '#4b5563', fontWeight: '500', fontSize: '14px' }}>Home</a>
-            <a href="/pricing" style={{ textDecoration: 'none', color: '#4b5563', fontWeight: '500', fontSize: '14px' }}>Pricing</a>
+          {/* NAVIGATION */}
+          <div style={{ display: 'flex', gap: '25px', alignItems: 'center' }}>
+            <a href="/" style={{ textDecoration: 'none', color: '#4b5563', fontWeight: '500', fontSize: '15px' }}>Home</a>
+            <a href="/pricing" style={{ textDecoration: 'none', color: '#4b5563', fontWeight: '500', fontSize: '15px' }}>Pricing</a>
             <button style={{
               backgroundColor: '#1e3a8a',
               color: 'white',
               border: 'none',
-              padding: '10px 18px',
-              borderRadius: '6px',
-              fontWeight: '600',
-              fontSize: '14px',
-              cursor: 'pointer'
+              padding: '10px 22px',
+              borderRadius: '8px',
+              fontWeight: '700',
+              cursor: 'pointer',
+              transition: '0.2s'
             }}>
               Try Free
             </button>
           </div>
         </nav>
-        {/* --- HEADER END --- */}
 
-        {/* This is where the magic happens - your page content goes here */}
+        {/* --- PAGE CONTENT --- */}
         <main>{children}</main>
 
-        {/* --- PROFESSIONAL FOOTER --- */}
-        <footer style={{ 
-          padding: '40px 5%', 
-          textAlign: 'center', 
-          backgroundColor: '#ffffff', 
-          borderTop: '1px solid #e5e7eb', 
-          marginTop: '60px' 
-        }}>
-          <p style={{ color: '#9ca3af', fontSize: '12px', fontWeight: '500' }}>
-            © 2026 HIRVANTA AI. ALL RIGHTS RESERVED.
-          </p>
+        {/* --- SIMPLE FOOTER --- */}
+        <footer style={{ padding: '40px 5%', textAlign: 'center', color: '#9ca3af', fontSize: '13px' }}>
+          © 2026 HIRVANTA. AI-POWERED CAREER GROWTH.
         </footer>
 
       </body>
