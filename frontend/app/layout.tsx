@@ -1,90 +1,102 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export default function HomePage() {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+
+  const menu = [
+    { name: "Dashboard", path: "/dashboard" },
+    { name: "Resume Builder", path: "/resume" },
+    { name: "Job Finder", path: "/jobs" },
+    { name: "Interview Coach", path: "/interview" },
+    { name: "Career Assistant", path: "/career-coach" },
+    { name: "Cover Letter", path: "/cover-letter" },
+    { name: "Recruiter Messages", path: "/recruiter" },
+    { name: "Job Tracker", path: "/tracker" },
+    { name: "Pricing", path: "/pricing" },
+  ];
+
   return (
-    <main className="min-h-screen bg-white">
-      
-      {/* Navbar */}
-      <header className="flex justify-between items-center px-8 py-4 border-b">
-        <h1 className="text-xl font-bold text-blue-600">Hirvanta</h1>
+    <html lang="en">
+      <body className="bg-gray-50">
 
-        <nav className="flex gap-6 items-center">
-          <Link href="/features">Features</Link>
-          <Link href="/pricing">Pricing</Link>
-          <Link href="/login">Sign In</Link>
+        <div className="flex h-screen">
 
-          <Link
-            href="/signup"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-          >
-            Try Free
-          </Link>
-        </nav>
-      </header>
+          {/* Sidebar */}
+          <aside className="w-64 bg-white border-r p-6 flex flex-col">
 
-      {/* Hero */}
-      <section className="text-center py-20 px-6">
-        <h2 className="text-4xl font-bold mb-4">
-          Everything You Need to Land Your Dream Job
-        </h2>
-        <p className="text-gray-600 mb-8">
-          Powerful AI tools designed for modern job seekers
-        </p>
-      </section>
+            <h1 className="text-2xl font-bold mb-8">
+              Hirvanta
+            </h1>
 
-      {/* Features Grid */}
-      <section className="grid grid-cols-3 gap-6 px-10 pb-20">
-        
-        <FeatureCard
-          title="AI Resume Builder"
-          desc="Generate ATS optimized resumes"
-          link="/resume"
-        />
+            <nav className="flex flex-col gap-2">
+              {menu.map((item) => (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  className={`p-2 rounded-lg ${
+                    pathname === item.path
+                      ? "bg-blue-600 text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
 
-        <FeatureCard
-          title="Smart Job Finder"
-          desc="Find matching jobs instantly"
-          link="/jobs"
-        />
+            <div className="mt-auto pt-6 border-t">
+              <Link href="/profile" className="block p-2">
+                Profile
+              </Link>
+              <Link href="/login" className="block p-2">
+                Logout
+              </Link>
+            </div>
 
-        <FeatureCard
-          title="Interview Coach"
-          desc="Practice interviews with AI"
-          link="/interview"
-        />
+          </aside>
 
-        <FeatureCard
-          title="Cover Letters"
-          desc="Generate personalized cover letters"
-          link="/career-coach"
-        />
+          {/* Main */}
+          <div className="flex-1 flex flex-col">
 
-        <FeatureCard
-          title="Job Tracker"
-          desc="Track applications easily"
-          link="/dashboard"
-        />
+            {/* Header */}
+            <header className="bg-white border-b px-6 py-4 flex justify-between items-center">
 
-        <FeatureCard
-          title="Recruiter Messages"
-          desc="Generate recruiter outreach"
-          link="/career-coach"
-        />
-      </section>
+              <div className="text-lg font-semibold">
+                AI Career Platform
+              </div>
 
-    </main>
-  );
-}
+              <div className="flex items-center gap-4">
 
-function FeatureCard({ title, desc, link }) {
-  return (
-    <Link href={link}>
-      <div className="border p-6 rounded-xl hover:shadow-lg cursor-pointer">
-        <h3 className="font-semibold text-lg mb-2">{title}</h3>
-        <p className="text-gray-600">{desc}</p>
-      </div>
-    </Link>
+                <input
+                  placeholder="Search..."
+                  className="border px-3 py-2 rounded-lg"
+                />
+
+                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center">
+                  U
+                </div>
+
+              </div>
+
+            </header>
+
+            {/* Content */}
+            <main className="p-6 overflow-auto">
+              {children}
+            </main>
+
+          </div>
+
+        </div>
+
+      </body>
+    </html>
   );
 }
