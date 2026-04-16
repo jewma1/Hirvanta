@@ -1,24 +1,40 @@
 "use client";
 
-export default function ForgotPassword(){
-return(
-<div className="min-h-screen flex items-center justify-center">
+import { useState } from "react";
 
-<div className="w-96">
+export default function ForgotPasswordPage() {
+  const [email, setEmail] = useState("");
 
-<h2 className="text-2xl font-bold mb-4">
-Reset Password
-</h2>
+  const sendReset = () => {
+    if (!email) {
+      alert("Enter your email");
+      return;
+    }
+    alert("Password reset link sent");
+  };
 
-<input
-className="border p-3 w-full mb-3"
-placeholder="Enter email"
-/>
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-[420px] bg-white p-8 rounded-2xl shadow-sm">
+        <h2 className="text-3xl font-bold mb-2">Reset Password</h2>
+        <p className="text-gray-500 mb-6">
+          Enter your email to receive reset link
+        </p>
 
-<button className="bg-blue-600 text-white w-full p-3 rounded">
-Send Reset Link
-</button>
+        <input
+          className="border p-3 w-full mb-4 rounded-lg"
+          placeholder="Enter email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-</div>
-</div>
-)}
+        <button
+          onClick={sendReset}
+          className="bg-blue-700 text-white w-full p-3 rounded-lg"
+        >
+          Send Reset Link
+        </button>
+      </div>
+    </div>
+  );
+}
