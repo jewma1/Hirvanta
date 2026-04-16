@@ -62,11 +62,12 @@ export default function HomePage() {
         </button>
       </div>
 
+      {/* --- UPDATED SUBTEXT AS PER YOUR SCREENSHOT --- */}
       <p style={{ marginTop: '24px', color: '#94a3b8', fontSize: '14px', fontWeight: '500' }}>
-        Free trial includes 3 resumes, 2 cover letters, and unlimited job search.
+        Free trial includes 3 resumes, 2 cover letters, unlimited chat interviews, and unlimited job search
       </p>
 
-      {/* --- NEW: LIFETIME UPGRADE SECTION --- */}
+      {/* LIFETIME UPGRADE SECTION */}
       <div style={{ 
         marginTop: '100px', 
         padding: '40px', 
