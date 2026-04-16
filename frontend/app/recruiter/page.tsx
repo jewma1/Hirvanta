@@ -3,32 +3,42 @@
 import { useState } from "react";
 
 export default function RecruiterPage() {
-  const [role, setRole] = useState("");
+  const [result, setResult] = useState("");
+
+  const generateRecruiter = async () => {
+    const res = await fetch(
+      "YOUR_BACKEND_URL/api/ai/recruiter",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: "Generate recruiter outreach message",
+        }),
+      }
+    );
+
+    const data = await res.json();
+    setResult(data.text);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="p-6">
 
       <h1 className="text-3xl font-bold mb-6">
         Recruiter Message Generator
       </h1>
 
-      <div className="bg-white p-6 rounded-xl shadow">
+      <button
+        onClick={generateRecruiter}
+        className="bg-blue-600 text-white p-4 rounded-lg mb-6"
+      >
+        Generate Recruiter Message
+      </button>
 
-        <input
-          className="border p-3 w-full mb-3"
-          placeholder="Target Role"
-          value={role}
-          onChange={(e)=>setRole(e.target.value)}
-        />
-
-        <button className="bg-blue-600 text-white px-6 py-3 rounded mb-4">
-          Generate Message
-        </button>
-
-        <div className="border p-4 rounded">
-          Hi Recruiter, I’m interested in {role} opportunities.
-        </div>
-
+      <div className="bg-white p-6 rounded-xl shadow min-h-[300px]">
+        {result || "AI recruiter message will appear here"}
       </div>
 
     </div>
