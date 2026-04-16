@@ -3,91 +3,98 @@
 import { useState } from "react";
 
 export default function ResumePage() {
-  const [tab,setTab]=useState("auto");
+  const [result, setResult] = useState("");
+
+  const generateResume = async () => {
+    const res = await fetch(
+      "YOUR_BACKEND_URL/api/ai/resume",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: "Generate professional resume",
+        }),
+      }
+    );
+
+    const data = await res.json();
+    setResult(data.text);
+  };
+
+  const generateFromJD = async () => {
+    const res = await fetch(
+      "YOUR_BACKEND_URL/api/ai/job-match",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: "Resume from job description",
+        }),
+      }
+    );
+
+    const data = await res.json();
+    setResult(data.text);
+  };
+
+  const improveResume = async () => {
+    const res = await fetch(
+      "YOUR_BACKEND_URL/api/ai/resume-improve",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: "Improve resume",
+        }),
+      }
+    );
+
+    const data = await res.json();
+    setResult(data.text);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="p-6">
 
       <h1 className="text-3xl font-bold mb-6">
         Resume Builder
       </h1>
 
-      {/* Tabs */}
-      <div className="flex gap-4 mb-6">
-        <Tab label="Auto Resume" id="auto" tab={tab} setTab={setTab}/>
-        <Tab label="From Job Description" id="jd" tab={tab} setTab={setTab}/>
-        <Tab label="Improve Resume" id="improve" tab={tab} setTab={setTab}/>
+      <div className="grid grid-cols-3 gap-4 mb-6">
+
+        <button
+          onClick={generateResume}
+          className="bg-blue-600 text-white p-4 rounded-lg"
+        >
+          Auto Resume
+        </button>
+
+        <button
+          onClick={generateFromJD}
+          className="bg-green-600 text-white p-4 rounded-lg"
+        >
+          From Job Description
+        </button>
+
+        <button
+          onClick={improveResume}
+          className="bg-purple-600 text-white p-4 rounded-lg"
+        >
+          Improve Resume
+        </button>
+
       </div>
 
-      <div className="bg-white rounded-xl shadow p-6">
-
-        {tab==="auto" && <AutoResume/>}
-        {tab==="jd" && <JDResume/>}
-        {tab==="improve" && <ImproveResume/>}
-
+      <div className="bg-white p-6 rounded-xl shadow min-h-[300px]">
+        {result || "AI result will appear here"}
       </div>
 
     </div>
   );
 }
-
-function Tab({label,id,tab,setTab}:any){
-return(
-<button
-onClick={()=>setTab(id)}
-className={`px-5 py-2 rounded-lg font-medium ${
-tab===id
-? "bg-blue-600 text-white"
-: "bg-gray-100"
-}`}
->
-{label}
-</button>
-)}
-
-function AutoResume(){
-return(
-<div className="grid grid-cols-2 gap-6">
-
-<div>
-<input className="border p-3 w-full mb-3" placeholder="Full Name"/>
-<input className="border p-3 w-full mb-3" placeholder="Target Role"/>
-<textarea className="border p-3 w-full mb-3" placeholder="Skills"/>
-<textarea className="border p-3 w-full mb-3" placeholder="Experience"/>
-
-<button className="bg-blue-600 text-white px-6 py-3 rounded-lg">
-Generate Resume
-</button>
-</div>
-
-<div className="border rounded-lg p-4">
-Preview will appear here
-</div>
-
-</div>
-)}
-
-function JDResume(){
-return(
-<div>
-<textarea
-className="border p-3 w-full mb-3"
-placeholder="Paste Job Description"
-/>
-
-<button className="bg-blue-600 text-white px-6 py-3 rounded-lg">
-Generate Tailored Resume
-</button>
-</div>
-)}
-
-function ImproveResume(){
-return(
-<div>
-<input type="file" className="mb-3"/>
-
-<button className="bg-blue-600 text-white px-6 py-3 rounded-lg">
-Analyze & Improve Resume
-</button>
-</div>
-)}
