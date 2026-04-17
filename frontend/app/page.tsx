@@ -1,72 +1,54 @@
-"use client";
-
-import Link from "next/link";
-
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white">
+    <main className="min-h-screen bg-[#f5f7fc]">
+      <section className="px-6 py-20 md:py-28">
+        <div className="mx-auto max-w-5xl text-center">
 
-      {/* Navbar */}
-      <div className="flex justify-between items-center px-10 py-4 border-b">
-        <h1 className="text-xl font-bold">Hirvanta</h1>
+          {/* Badge */}
+          <div className="mb-8 inline-flex items-center rounded-full bg-[#e9edf5] px-5 py-3 text-[15px] font-medium text-[#2546A8]">
+            <span className="mr-2">⚡</span>
+            AI-Powered Career Assistant
+          </div>
 
-        <div className="flex gap-6 text-gray-600">
-          <span>Features</span>
-          <span>How it Works</span>
-          <span>Pricing</span>
+          {/* Heading */}
+          <h1 className="mx-auto max-w-5xl text-5xl font-extrabold leading-tight tracking-tight text-[#10172f] md:text-7xl">
+            Your AI Career Copilot
+            <br />
+            <span className="text-[#5648e7]">
+              From Resume to Offer Letter
+            </span>
+          </h1>
+
+          {/* Description */}
+          <p className="mx-auto mt-8 max-w-4xl text-xl leading-10 text-slate-600">
+            Stop spending hours on applications. Hirvanta uses AI to build resumes,
+            write cover letters, prepare for interviews, and find jobs — all from a
+            single job description.
+          </p>
+
+          {/* ✅ BUTTONS (UPDATED EXACTLY AS YOU MARKED) */}
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+
+            {/* LEFT BUTTON */}
+            <button className="inline-flex min-w-[280px] items-center justify-center rounded-2xl bg-[#2546A8] px-8 py-5 text-xl font-semibold text-white shadow-sm transition hover:opacity-90">
+              Start Your Free Trial
+              <span className="ml-4 text-2xl">→</span>
+            </button>
+
+            {/* RIGHT BUTTON */}
+            <button className="inline-flex min-w-[280px] items-center justify-center rounded-2xl border border-slate-300 bg-white px-8 py-5 text-xl font-medium text-[#10172f] shadow-sm transition hover:bg-slate-50">
+              Upload LinkedIn Job Description
+            </button>
+
+          </div>
+
+          {/* ✅ SMALL TEXT (UPDATED) */}
+          <p className="mt-5 text-lg text-slate-500">
+            Free trial includes 3 resumes only
+          </p>
+
         </div>
-
-        <div className="flex gap-4 items-center">
-          <Link href="/login" className="text-gray-700">
-            Sign In
-          </Link>
-
-          <Link
-            href="/login"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-          >
-            Try Free →
-          </Link>
-        </div>
-      </div>
-
-      {/* Hero */}
-      <div className="text-center mt-20 px-4">
-        <p className="text-sm bg-gray-100 inline-block px-3 py-1 rounded-full">
-          ⚡ AI-Powered Career Assistant
-        </p>
-
-        <h1 className="text-5xl font-bold mt-6">
-          Your AI Career Copilot
-        </h1>
-
-        <h2 className="text-4xl font-bold text-blue-600 mt-2">
-          From Resume to Offer Letter
-        </h2>
-
-        <p className="text-gray-600 mt-6 max-w-2xl mx-auto">
-          Stop spending hours on applications. Hirvanta uses AI to build resumes,
-          write cover letters, prepare for interviews, and find jobs — all from a
-          single job description.
-        </p>
-
-        <div className="flex justify-center gap-4 mt-8">
-          <Link
-            href="/login"
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg"
-          >
-            Try Free — No Credit Card →
-          </Link>
-
-          <button className="border px-6 py-3 rounded-lg">
-            Paste LinkedIn Job
-          </button>
-        </div>
-
-        <p className="text-sm text-gray-400 mt-4">
-          Free trial includes 2 resumes, 1 interview, and unlimited job search
-        </p>
-      </div>
-    </div>
-  );
+      </section>
+    </main>
+  )
 }
