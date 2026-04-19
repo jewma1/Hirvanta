@@ -1,24 +1,10 @@
-"use client";
-
-export default function ProfilePage(){
-return(
-<div className="min-h-screen p-8">
-
-<h1 className="text-3xl font-bold mb-6">
-Profile
-</h1>
-
-<div className="bg-white p-6 rounded-xl shadow w-96">
-
-<input className="border p-3 w-full mb-3" placeholder="Name"/>
-<input className="border p-3 w-full mb-3" placeholder="Email"/>
-<input className="border p-3 w-full mb-3" placeholder="Role"/>
-
-<button className="bg-blue-600 text-white px-6 py-2 rounded">
-Save
-</button>
-
-</div>
-
-</div>
-)}
+export default function ProfilePage() {
+  return (
+    <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+      <h1 className="text-3xl font-bold text-slate-900">My Profile</h1>
+      <p className="mt-3 text-slate-600">
+        This page is ready. Next step is connecting your real user account details.
+      </p>
+    </div>
+  );
+}
