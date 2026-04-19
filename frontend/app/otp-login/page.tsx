@@ -1,74 +1,33 @@
-"use client";
+import Link from "next/link";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-
-export default function OTPLoginPage() {
-  const router = useRouter();
-  const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState("");
-
-  const sendOtp = () => {
-    if (!phone) {
-      alert("Enter phone number");
-      return;
-    }
-    alert("OTP sent successfully");
-  };
-
-  const verifyOtp = () => {
-    if (!otp) {
-      alert("Enter OTP");
-      return;
-    }
-
-    localStorage.setItem(
-      "hirvantaUser",
-      JSON.stringify({
-        name: "User",
-        email: `${phone}@phone.login`,
-      })
-    );
-
-    router.push("/dashboard");
-  };
-
+export default function OtpLoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-[420px] bg-white p-8 rounded-2xl shadow-sm">
-        <h2 className="text-3xl font-bold mb-2">Mobile OTP Login</h2>
-        <p className="text-gray-500 mb-6">
-          Login using your phone number
+    <main className="flex min-h-screen items-center justify-center bg-[#f5f7fc] px-4">
+      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+        <h1 className="text-2xl font-bold text-slate-900">OTP Login</h1>
+        <p className="mt-2 text-sm text-slate-500">
+          Enter your mobile number or email to receive an OTP.
         </p>
 
-        <input
-          className="border p-3 w-full mb-4 rounded-lg"
-          placeholder="Phone Number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
+        <form className="mt-6 space-y-4">
+          <input
+            type="text"
+            placeholder="Email or mobile number"
+            className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-brand-500"
+          />
 
-        <button
-          onClick={sendOtp}
-          className="border w-full p-3 rounded-lg mb-4"
-        >
-          Send OTP
-        </button>
+          <button className="w-full rounded-2xl bg-brand-600 px-4 py-3 font-semibold text-white transition hover:opacity-90">
+            Send OTP
+          </button>
+        </form>
 
-        <input
-          className="border p-3 w-full mb-4 rounded-lg"
-          placeholder="Enter OTP"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-        />
-
-        <button
-          onClick={verifyOtp}
-          className="bg-blue-700 text-white w-full p-3 rounded-lg"
-        >
-          Verify OTP
-        </button>
+        <p className="mt-6 text-sm text-slate-600">
+          Back to{" "}
+          <Link href="/login" className="font-medium text-brand-600 hover:underline">
+            Login
+          </Link>
+        </p>
       </div>
-    </div>
+    </main>
   );
 }
