@@ -1,67 +1,143 @@
-'use client';
-import Link from 'next/link';
+"use client";
 
-export default function JobDetails() {
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+type JobItem = {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  posted: string;
+  applyUrl: string;
+  description: string;
+  requirements: string[];
+};
+
+export default function JobDetailsPage() {
+  const [job, setJob] = useState<JobItem | null>(null);
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("hirvanta_selected_job");
+    if (stored) {
+      setJob(JSON.parse(stored));
+    }
+  }, []);
+
+  function saveToTracker() {
+    if (!job) return;
+
+    const existing = localStorage.getItem("hirvanta_tracker_jobs");
+    const parsed = existing ? JSON.parse(existing) : [];
+
+    const alreadyExists = parsed.some((item: JobItem) => item.id === job.id);
+    if (!alreadyExists) {
+      parsed.unshift({
+        ...job,
+        status: "Saved",
+        savedAt: new Date().toISOString()
+      });
+      localStorage.setItem("hirvanta_tracker_jobs", JSON.stringify(parsed));
+    }
+
+    setSaved(true);
+  }
+
+  if (!job) {
+    return (
+      <div className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-soft">
+        <h1 className="text-3xl font-bold text-slate-900">No job selected</h1>
+        <p className="mt-3 text-slate-600">
+          Go to Job Finder and choose a job first.
+        </p>
+        <Link
+          href="/jobs"
+          className="mt-6 inline-block rounded-2xl bg-[#2546A8] px-5 py-3 font-semibold text-white"
+        >
+          Back to Jobs
+        </Link>
+      </div>
+    );
+  }
+
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc', fontFamily: 'system-ui, sans-serif' }}>
-      
-      {/* Navbar */}
-      <nav style={{ padding: '20px 40px', backgroundColor: 'white', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Link href="/jobs" style={{ textDecoration: 'none', color: '#1e3a8a', fontWeight: 'bold' }}>← Back to Jobs</Link>
-        <div style={{ fontWeight: '900', color: '#111827' }}>📄 Hirvanta AI</div>
-      </nav>
+    <div className="space-y-6">
+      <section className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-soft">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h1 className="text-4xl font-bold text-slate-900">{job.title}</h1>
+            <p className="mt-3 text-lg text-slate-500">
+              {job.company} • {job.location} • Posted {job.posted}
+            </p>
+          </div>
 
-      <main style={{ padding: '40px', maxWidth: '850px', margin: '0 auto' }}>
-        
-        {/* Job Header Card */}
-        <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', border: '1px solid #e5e7eb', marginBottom: '30px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-            <div>
-              <h1 style={{ fontSize: '32px', fontWeight: '900', color: '#111827', margin: '0 0 10px 0' }}>Senior Project Engineer</h1>
-              <p style={{ fontSize: '18px', color: '#4b5563', margin: 0 }}>Ingersoll Rand • Bangalore • Posted 2 days ago</p>
-            </div>
-            <span style={{ backgroundColor: '#e0e7ff', color: '#4338ca', padding: '6px 16px', borderRadius: '20px', fontSize: '12px', fontWeight: 'bold' }}>FULL-TIME</span>
-          </div>
-          
-          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-            <button style={{ backgroundColor: '#1e3a8a', color: 'white', border: 'none', padding: '14px 28px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>
-              Apply on LinkedIn ↗
-            </button>
-            <button style={{ backgroundColor: '#f3f4f6', color: '#111827', border: 'none', padding: '14px 28px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>
-              Save Job
-            </button>
-          </div>
+          <span className="rounded-full bg-indigo-50 px-4 py-2 text-sm font-semibold text-indigo-700">
+            {job.type.toUpperCase()}
+          </span>
         </div>
 
-        {/* The Job Description Content */}
-        <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', border: '1px solid #e5e7eb' }}>
-          <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '15px' }}>Job Description</h3>
-          <p style={{ lineHeight: '1.7', color: '#374151', marginBottom: '30px' }}>
-            As a Senior Project Engineer at Ingersoll Rand, you will oversee mechanical engineering projects 
-            from conception to completion. You will work closely with cross-functional teams in Bangalore 
-            to ensure project milestones are met using SolidWorks and advanced project management tools.
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a
+            href={job.applyUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-2xl bg-[#2546A8] px-5 py-3 font-semibold text-white transition hover:opacity-90"
+          >
+            Apply on LinkedIn ↗
+          </a>
+
+          <button
+            onClick={saveToTracker}
+            className="rounded-2xl bg-slate-100 px-5 py-3 font-semibold text-slate-900 transition hover:bg-slate-200"
+          >
+            {saved ? "Saved to Tracker" : "Save Job"}
+          </button>
+        </div>
+      </section>
+
+      <section className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-soft">
+        <h2 className="text-2xl font-bold text-slate-900">Job Description</h2>
+        <p className="mt-4 whitespace-pre-line text-base leading-8 text-slate-600">
+          {job.description}
+        </p>
+
+        <h3 className="mt-8 text-xl font-bold text-slate-900">Key Requirements</h3>
+        <ul className="mt-4 list-disc space-y-3 pl-6 text-base text-slate-600">
+          {job.requirements.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+
+        <div className="mt-8 rounded-3xl border border-sky-200 bg-sky-50 p-6 text-center">
+          <h3 className="text-xl font-bold text-sky-800">Perfect Match Found!</h3>
+          <p className="mt-2 text-sky-700">
+            Hirvanta can tailor your resume, cover letter, and interview prep for this exact role.
           </p>
 
-          <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '15px' }}>Key Requirements</h3>
-          <ul style={{ lineHeight: '2', color: '#374151', paddingLeft: '20px', marginBottom: '40px' }}>
-            <li>Bachelor's degree in Mechanical or Aerospace Engineering.</li>
-            <li>3-5 years of experience in project handling.</li>
-            <li>Proficiency in SolidWorks and AISI material standards.</li>
-            <li>Strong communication skills for stakeholder management.</li>
-          </ul>
-
-          {/* THE STARTUP UNIQUE FEATURE: AI TAILORING */}
-          <div style={{ backgroundColor: '#f0f9ff', padding: '30px', borderRadius: '16px', border: '1px solid #bae6fd', textAlign: 'center' }}>
-            <h3 style={{ color: '#0369a1', margin: '0 0 10px 0' }}>Perfect Match Found!</h3>
-            <p style={{ color: '#0c4a6e', marginBottom: '20px' }}>Our AI can rewrite your resume to highlight your <strong>Aerospace background</strong> for this specific role.</p>
-            <Link href="/resume">
-              <button style={{ backgroundColor: '#0369a1', color: 'white', border: 'none', padding: '16px 32px', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', fontSize: '18px' }}>
-                🎯 Tailor Resume Now
-              </button>
+          <div className="mt-5 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/resume"
+              className="rounded-2xl bg-sky-700 px-5 py-3 font-semibold text-white transition hover:opacity-90"
+            >
+              Tailor Resume
+            </Link>
+            <Link
+              href="/cover-letter"
+              className="rounded-2xl bg-white px-5 py-3 font-semibold text-sky-800 transition hover:bg-sky-100"
+            >
+              Generate Cover Letter
+            </Link>
+            <Link
+              href="/interview"
+              className="rounded-2xl bg-white px-5 py-3 font-semibold text-sky-800 transition hover:bg-sky-100"
+            >
+              Prepare Interview
             </Link>
           </div>
         </div>
-      </main>
+      </section>
     </div>
   );
 }
