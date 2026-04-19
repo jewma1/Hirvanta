@@ -1,55 +1,67 @@
 import Link from "next/link";
-import { ArrowRight, Sparkles, FileText, Search, MessageSquare, Briefcase, Mic, Crown } from "lucide-react";
+import {
+  ArrowRight,
+  Sparkles,
+  FileText,
+  Search,
+  MessageSquare,
+  Briefcase,
+  Mic,
+  Crown,
+} from "lucide-react";
 
 const features = [
   {
     title: "AI Resume Builder",
     desc: "Generate ATS-optimized resumes tailored to any job description with multiple templates.",
-    icon: FileText
+    icon: FileText,
   },
   {
     title: "Smart Job Finder",
     desc: "Find matching jobs based on your role, experience, and location with one-click apply links.",
-    icon: Search
+    icon: Search,
   },
   {
     title: "Interview Coach",
     desc: "Practice interviews with AI that asks role-specific questions and gives real-time feedback.",
-    icon: Mic
+    icon: Mic,
   },
   {
     title: "Cover Letters",
     desc: "Generate personalized cover letters that highlight your strengths for each application.",
-    icon: MessageSquare
+    icon: MessageSquare,
   },
   {
     title: "Job Tracker",
     desc: "Track all your applications, interview stages, and offers in one organized dashboard.",
-    icon: Briefcase
+    icon: Briefcase,
   },
   {
     title: "Recruiter Messages",
     desc: "Generate professional LinkedIn messages, emails, and follow-ups to stand out.",
-    icon: Crown
-  }
+    icon: Crown,
+  },
 ];
 
 const testimonials = [
   {
     name: "Priya Sharma",
     role: "Software Engineer",
-    quote: "Hirvanta helped me land my dream job. The AI interview coach was incredibly helpful."
+    quote:
+      "Hirvanta helped me land my dream job. The AI interview coach was incredibly helpful.",
   },
   {
     name: "Rahul Patel",
     role: "Product Manager",
-    quote: "The resume builder is amazing. Got 3x more callbacks after switching to Hirvanta-generated resumes."
+    quote:
+      "The resume builder is amazing. Got 3x more callbacks after switching to Hirvanta-generated resumes.",
   },
   {
     name: "Sarah Chen",
     role: "Data Analyst",
-    quote: "Best career tool I’ve used. The cover letter generator saved me hours of work on every application."
-  }
+    quote:
+      "Best career tool I’ve used. The cover letter generator saved me hours of work on every application.",
+  },
 ];
 
 export default function HomePage() {
@@ -132,7 +144,8 @@ export default function HomePage() {
           </div>
 
           <p className="mt-5 text-lg text-slate-500">
-            Free trial includes 3 resumes, 2 cover letters, unlimited chat interviews, and unlimited job search
+            Free trial includes 3 resumes, 2 cover letters, unlimited chat
+            interviews, and unlimited job search
           </p>
         </div>
       </section>
@@ -159,8 +172,12 @@ export default function HomePage() {
                   <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50">
                     <Icon className="h-6 w-6 text-brand-600" />
                   </div>
-                  <h3 className="text-2xl font-semibold text-slate-900">{feature.title}</h3>
-                  <p className="mt-3 text-base leading-7 text-slate-500">{feature.desc}</p>
+                  <h3 className="text-2xl font-semibold text-slate-900">
+                    {feature.title}
+                  </h3>
+                  <p className="mt-3 text-base leading-7 text-slate-500">
+                    {feature.desc}
+                  </p>
                 </div>
               );
             })}
@@ -171,7 +188,9 @@ export default function HomePage() {
       <section id="how-it-works" className="px-6 pb-20">
         <div className="mx-auto max-w-7xl rounded-[32px] bg-white px-6 py-14 shadow-soft md:px-10">
           <div className="text-center">
-            <h2 className="text-4xl font-bold tracking-tight text-slate-900">How It Works</h2>
+            <h2 className="text-4xl font-bold tracking-tight text-slate-900">
+              How It Works
+            </h2>
             <p className="mt-4 text-lg text-slate-500">
               Three simple steps to supercharge your job search
             </p>
@@ -180,7 +199,9 @@ export default function HomePage() {
           <div className="mt-12 grid gap-8 md:grid-cols-3">
             <div className="text-center">
               <div className="mb-4 text-6xl font-bold text-slate-200">01</div>
-              <h3 className="text-2xl font-semibold text-slate-900">Add Job Description</h3>
+              <h3 className="text-2xl font-semibold text-slate-900">
+                Add Job Description
+              </h3>
               <p className="mt-3 text-base leading-7 text-slate-500">
                 Paste, upload, or enter a job URL from any platform.
               </p>
@@ -188,7 +209,9 @@ export default function HomePage() {
 
             <div className="text-center">
               <div className="mb-4 text-6xl font-bold text-slate-200">02</div>
-              <h3 className="text-2xl font-semibold text-slate-900">AI Analyzes</h3>
+              <h3 className="text-2xl font-semibold text-slate-900">
+                AI Analyzes
+              </h3>
               <p className="mt-3 text-base leading-7 text-slate-500">
                 We extract skills, requirements, and key details instantly.
               </p>
@@ -196,7 +219,9 @@ export default function HomePage() {
 
             <div className="text-center">
               <div className="mb-4 text-6xl font-bold text-slate-200">03</div>
-              <h3 className="text-2xl font-semibold text-slate-900">Get Your Toolkit</h3>
+              <h3 className="text-2xl font-semibold text-slate-900">
+                Get Your Toolkit
+              </h3>
               <p className="mt-3 text-base leading-7 text-slate-500">
                 Resume, cover letter, and interview prep ready in seconds.
               </p>
@@ -220,7 +245,9 @@ export default function HomePage() {
             <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
               <div className="text-xl font-semibold text-slate-900">Free</div>
               <div className="mt-2 text-sm text-slate-500">Get started</div>
-              <div className="mt-5 text-4xl font-extrabold text-slate-900">Free</div>
+              <div className="mt-5 text-4xl font-extrabold text-slate-900">
+                Free
+              </div>
               <ul className="mt-6 space-y-3 text-sm text-slate-700">
                 <li>✓ 3 Resume generations</li>
                 <li>✓ 2 Cover letters</li>
@@ -239,7 +266,9 @@ export default function HomePage() {
             <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
               <div className="text-xl font-semibold text-slate-900">Weekly</div>
               <div className="mt-2 text-sm text-slate-500">Basic access</div>
-              <div className="mt-5 text-4xl font-extrabold text-slate-900">₹7<span className="text-lg font-medium">/week</span></div>
+              <div className="mt-5 text-4xl font-extrabold text-slate-900">
+                ₹7<span className="text-lg font-medium">/week</span>
+              </div>
               <ul className="mt-6 space-y-3 text-sm text-slate-700">
                 <li>✓ 10 Resumes</li>
                 <li>✓ 10 Cover letters</li>
@@ -248,7 +277,7 @@ export default function HomePage() {
               </ul>
               <Link
                 href="/pricing"
-                className="mt-8 block rounded-2xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white transition hover:opacity-90"
+                className="mt-8 block rounded-2xl bg-[#2546A8] px-4 py-3 text-center text-sm font-semibold text-white transition hover:opacity-90"
               >
                 Get Weekly
               </Link>
@@ -260,7 +289,9 @@ export default function HomePage() {
               </div>
               <div className="text-xl font-semibold">Monthly</div>
               <div className="mt-2 text-sm text-blue-100">Advanced tools</div>
-              <div className="mt-5 text-4xl font-extrabold">₹99<span className="text-lg font-medium">/mo</span></div>
+              <div className="mt-5 text-4xl font-extrabold">
+                ₹99<span className="text-lg font-medium">/mo</span>
+              </div>
               <ul className="mt-6 space-y-3 text-sm text-blue-50">
                 <li>✓ 40 Resumes</li>
                 <li>✓ 30 Cover letters</li>
@@ -281,8 +312,12 @@ export default function HomePage() {
                 Best Value
               </div>
               <div className="text-xl font-semibold text-slate-900">Lifetime</div>
-              <div className="mt-2 text-sm text-slate-500">Everything unlimited</div>
-              <div className="mt-5 text-4xl font-extrabold text-slate-900">₹299<span className="text-lg font-medium"> once</span></div>
+              <div className="mt-2 text-sm text-slate-500">
+                Everything unlimited
+              </div>
+              <div className="mt-5 text-4xl font-extrabold text-slate-900">
+                ₹299<span className="text-lg font-medium"> once</span>
+              </div>
               <ul className="mt-6 space-y-3 text-sm text-slate-700">
                 <li>✓ Everything unlimited</li>
                 <li>✓ Full AI career counselor</li>
