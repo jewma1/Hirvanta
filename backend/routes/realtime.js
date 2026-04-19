@@ -1,5 +1,4 @@
 const express = require("express");
-const fetch = require("node-fetch");
 
 const router = express.Router();
 
@@ -15,7 +14,7 @@ router.post("/session", async (req, res) => {
     const response = await fetch("https://api.openai.com/v1/realtime/sessions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -25,12 +24,9 @@ router.post("/session", async (req, res) => {
     });
 
     const data = await response.json();
-
     res.status(200).json(data);
-
   } catch (error) {
     console.error("Realtime session error:", error.message);
-
     res.status(500).json({
       success: false,
       message: error.message
