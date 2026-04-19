@@ -63,4 +63,48 @@ export default function ProfilePage() {
       </p>
 
       <div className="mt-8 grid gap-4 md:grid-cols-2">
-        <div className="
+        <div className="rounded-2xl bg-slate-50 p-4">
+          <div className="text-sm text-slate-500">Full Name</div>
+          <div className="mt-1 text-lg font-semibold text-slate-900">{fullName}</div>
+        </div>
+
+        <div className="rounded-2xl bg-slate-50 p-4">
+          <div className="text-sm text-slate-500">Email</div>
+          <div className="mt-1 text-lg font-semibold text-slate-900">
+            {user?.email || "-"}
+          </div>
+        </div>
+
+        <div className="rounded-2xl bg-slate-50 p-4">
+          <div className="text-sm text-slate-500">User ID</div>
+          <div className="mt-1 break-all text-sm font-medium text-slate-900">
+            {user?.id || "-"}
+          </div>
+        </div>
+
+        <div className="rounded-2xl bg-slate-50 p-4">
+          <div className="text-sm text-slate-500">Created At</div>
+          <div className="mt-1 text-sm font-medium text-slate-900">
+            {user?.created_at ? new Date(user.created_at).toLocaleString() : "-"}
+          </div>
+        </div>
+
+        <div className="rounded-2xl bg-slate-50 p-4 md:col-span-2">
+          <div className="text-sm text-slate-500">Last Sign In</div>
+          <div className="mt-1 text-sm font-medium text-slate-900">
+            {user?.last_sign_in_at
+              ? new Date(user.last_sign_in_at).toLocaleString()
+              : "-"}
+          </div>
+        </div>
+      </div>
+
+      <button
+        onClick={handleLogout}
+        className="mt-8 rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:opacity-90"
+      >
+        Logout
+      </button>
+    </div>
+  );
+}
