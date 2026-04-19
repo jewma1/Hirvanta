@@ -1,117 +1,139 @@
 "use client";
 
+import Link from "next/link";
+
 const plans = [
   {
     name: "Free",
-    price: "₹0",
-    description: "Best for trying the platform",
+    subtitle: "Get started",
+    price: "Free",
     features: [
-      "1 Resume",
-      "1 Cover Letter",
-      "Basic Job Search",
-      "Basic Interview Practice",
+      "3 Resume generations",
+      "2 Cover letters",
+      "Unlimited chat interviews",
+      "2 Voice interviews",
+      "Unlimited job search",
     ],
-    button: "Get Started",
-    highlighted: false,
+    button: "Start Free",
+    buttonStyle: "border border-slate-300 bg-white text-slate-900 hover:bg-slate-50",
   },
   {
     name: "Weekly",
+    subtitle: "Basic access",
     price: "₹7",
-    description: "Best for short-term job applications",
+    suffix: "/week",
     features: [
-      "Unlimited Resume Edits",
-      "Unlimited Cover Letters",
-      "AI Career Assistant",
-      "Recruiter Messages",
-      "Job Tracker",
+      "10 Resumes",
+      "10 Cover letters",
+      "10 Voice interviews",
+      "Resume optimizer",
     ],
-    button: "Choose Weekly",
-    highlighted: false,
+    button: "Get Weekly",
+    buttonStyle: "bg-[#2546A8] text-white hover:opacity-90",
   },
   {
     name: "Monthly",
+    subtitle: "Advanced tools",
     price: "₹99",
-    description: "Best value for active job seekers",
+    suffix: "/mo",
     features: [
-      "Everything in Weekly",
-      "Unlimited Job Search",
-      "Unlimited Interview Practice",
-      "Priority Access",
-      "Faster Support",
+      "40 Resumes",
+      "30 Cover letters",
+      "25 Voice interviews",
+      "AI Career assistant",
+      "Job tracker",
     ],
-    button: "Choose Monthly",
-    highlighted: true,
+    button: "Get Monthly",
+    featured: true,
+    buttonStyle: "bg-white text-[#2446ad] hover:opacity-90",
   },
   {
     name: "Lifetime",
+    subtitle: "Everything unlimited",
     price: "₹299",
-    description: "Pay once and use forever",
+    suffix: " once",
     features: [
-      "Everything in Monthly",
-      "Lifetime Access",
-      "No Renewal Needed",
-      "Priority Support",
-      "Best Long-Term Value",
+      "Everything unlimited",
+      "Full AI career counselor",
+      "All premium templates",
+      "Future features",
     ],
     button: "Get Lifetime",
-    highlighted: false,
+    best: true,
+    buttonStyle: "bg-emerald-500 text-white hover:opacity-90",
   },
 ];
 
 export default function PricingPage() {
   return (
     <div className="space-y-6">
-      <section className="rounded-3xl bg-white p-8 shadow-sm">
+      <section className="rounded-[28px] bg-white p-8 shadow-soft">
         <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-slate-900">
-            Simple Pricing
+          <h1 className="text-5xl font-bold tracking-tight text-slate-900">
+            Choose Your Plan
           </h1>
-          <p className="mt-4 text-lg text-slate-600">
-            Choose the plan that fits your job search journey.
+          <p className="mt-4 text-lg text-slate-500">
+            Start free, upgrade when you need more power
           </p>
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <div className="inline-flex rounded-full bg-[#2546A8] px-4 py-2 text-sm font-semibold text-white">
+            International Cards
+          </div>
         </div>
 
         <div className="mt-10 grid gap-6 xl:grid-cols-4">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`rounded-3xl border bg-white p-6 shadow-sm ${
-                plan.highlighted
-                  ? "border-brand-600 ring-2 ring-brand-100"
-                  : "border-slate-200"
+              className={`relative rounded-3xl border p-6 shadow-sm ${
+                plan.featured
+                  ? "bg-[#2446ad] text-white border-[#2446ad] shadow-soft"
+                  : plan.best
+                  ? "border-2 border-emerald-500 bg-white"
+                  : "border-slate-200 bg-white"
               }`}
             >
-              {plan.highlighted && (
-                <div className="mb-4 inline-flex rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
-                  Most Popular
+              {plan.featured && (
+                <div className="absolute -top-3 right-5 rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold text-white">
+                  Popular
                 </div>
               )}
 
-              <h2 className="text-2xl font-bold text-slate-900">{plan.name}</h2>
-              <p className="mt-2 text-sm text-slate-500">{plan.description}</p>
+              {plan.best && (
+                <div className="absolute -top-3 right-5 rounded-full bg-emerald-500 px-3 py-1 text-xs font-semibold text-white">
+                  Best Value
+                </div>
+              )}
 
-              <div className="mt-5 text-4xl font-extrabold text-slate-900">
+              <h2 className={`text-2xl font-bold ${plan.featured ? "text-white" : "text-slate-900"}`}>
+                {plan.name}
+              </h2>
+              <p className={`mt-2 text-sm ${plan.featured ? "text-blue-100" : "text-slate-500"}`}>
+                {plan.subtitle}
+              </p>
+
+              <div className={`mt-5 text-5xl font-extrabold ${plan.featured ? "text-white" : "text-slate-900"}`}>
                 {plan.price}
+                {plan.suffix ? <span className="text-lg font-medium">{plan.suffix}</span> : null}
               </div>
 
-              <ul className="mt-6 space-y-3 text-sm text-slate-700">
+              <ul className={`mt-6 space-y-3 text-sm ${plan.featured ? "text-blue-50" : "text-slate-700"}`}>
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2">
-                    <span className="mt-0.5 text-brand-600">✓</span>
+                    <span className={plan.featured ? "text-emerald-300" : "text-emerald-500"}>✓</span>
                     <span>{feature}</span>
                   </li>
                 ))}
               </ul>
 
-              <button
-                className={`mt-8 w-full rounded-2xl px-4 py-3 text-sm font-semibold transition ${
-                  plan.highlighted
-                    ? "bg-brand-600 text-white hover:opacity-90"
-                    : "bg-slate-900 text-white hover:opacity-90"
-                }`}
+              <Link
+                href="/signup"
+                className={`mt-8 block rounded-2xl px-4 py-3 text-center text-sm font-semibold transition ${plan.buttonStyle}`}
               >
                 {plan.button}
-              </button>
+              </Link>
             </div>
           ))}
         </div>
