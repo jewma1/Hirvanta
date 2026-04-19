@@ -1,40 +1,33 @@
-"use client";
-
-import { useState } from "react";
+import Link from "next/link";
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState("");
-
-  const sendReset = () => {
-    if (!email) {
-      alert("Enter your email");
-      return;
-    }
-    alert("Password reset link sent");
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-[420px] bg-white p-8 rounded-2xl shadow-sm">
-        <h2 className="text-3xl font-bold mb-2">Reset Password</h2>
-        <p className="text-gray-500 mb-6">
-          Enter your email to receive reset link
+    <main className="flex min-h-screen items-center justify-center bg-[#f5f7fc] px-4">
+      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+        <h1 className="text-2xl font-bold text-slate-900">Forgot Password</h1>
+        <p className="mt-2 text-sm text-slate-500">
+          Enter your email and we will help you reset your password.
         </p>
 
-        <input
-          className="border p-3 w-full mb-4 rounded-lg"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <form className="mt-6 space-y-4">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-brand-500"
+          />
 
-        <button
-          onClick={sendReset}
-          className="bg-blue-700 text-white w-full p-3 rounded-lg"
-        >
-          Send Reset Link
-        </button>
+          <button className="w-full rounded-2xl bg-brand-600 px-4 py-3 font-semibold text-white transition hover:opacity-90">
+            Send Reset Link
+          </button>
+        </form>
+
+        <p className="mt-6 text-sm text-slate-600">
+          Back to{" "}
+          <Link href="/login" className="font-medium text-brand-600 hover:underline">
+            Login
+          </Link>
+        </p>
       </div>
-    </div>
+    </main>
   );
 }
