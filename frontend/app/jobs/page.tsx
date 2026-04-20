@@ -1,208 +1,303 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
-import { MapPin, Building2, Briefcase, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { Search, MapPin, Briefcase, Building2, ArrowRight } from "lucide-react";
 
-type JobItem = {
+type JobSearchMode = "role" | "skill";
+
+type JobCard = {
   id: string;
   title: string;
   company: string;
   location: string;
-  type: string;
-  posted: string;
+  workMode: string;
+  experience: string;
+  source: string;
   applyUrl: string;
   description: string;
-  requirements: string[];
 };
 
-const JOBS: JobItem[] = [
-  {
-    id: "project-engineer-ingersoll-rand",
-    title: "Project Engineer",
-    company: "Ingersoll Rand",
-    location: "Bangalore",
-    type: "Full-time",
-    posted: "2 days ago",
-    applyUrl: "https://www.linkedin.com/jobs/",
-    description:
-      "As a Project Engineer, you will oversee engineering projects from planning to execution, coordinate with cross-functional teams, and ensure delivery against technical and business milestones.",
-    requirements: [
-      "Bachelor’s degree in Mechanical, Civil, Electrical, or related Engineering discipline",
-      "2–5 years of project engineering or execution experience",
-      "Strong stakeholder communication and reporting skills",
-      "Knowledge of planning tools, quality, and documentation"
-    ]
-  },
-  {
-    id: "frontend-developer-google",
-    title: "Frontend Developer",
-    company: "Google",
-    location: "Remote",
-    type: "Full-time",
-    posted: "1 day ago",
-    applyUrl: "https://www.linkedin.com/jobs/",
-    description:
-      "Build fast, accessible frontend experiences using modern JavaScript frameworks and collaborate with design and backend teams to ship high-quality products.",
-    requirements: [
-      "Strong React and JavaScript skills",
-      "Experience with responsive UI systems",
-      "Good understanding of API integration",
-      "Ability to work in a fast-moving product team"
-    ]
-  },
-  {
-    id: "backend-engineer-microsoft",
-    title: "Backend Engineer",
-    company: "Microsoft",
-    location: "Bangalore",
-    type: "Full-time",
-    posted: "3 days ago",
-    applyUrl: "https://www.linkedin.com/jobs/",
-    description:
-      "Design and maintain backend services, APIs, and scalable data systems with strong reliability, testing, and performance standards.",
-    requirements: [
-      "Experience with Node.js, APIs, and databases",
-      "Knowledge of distributed systems fundamentals",
-      "Strong debugging and system design skills",
-      "Experience with cloud deployment"
-    ]
-  },
-  {
-    id: "full-stack-developer-amazon",
-    title: "Full Stack Developer",
-    company: "Amazon",
-    location: "Hyderabad",
-    type: "Full-time",
-    posted: "4 days ago",
-    applyUrl: "https://www.linkedin.com/jobs/",
-    description:
-      "Work across frontend and backend systems, build product features end-to-end, and collaborate with business, design, and engineering teams.",
-    requirements: [
-      "Experience in both frontend and backend development",
-      "Understanding of REST APIs and databases",
-      "Strong product thinking",
-      "Ability to ship features independently"
-    ]
-  }
-];
-
 export default function JobsPage() {
+  const [searchMode, setSearchMode] = useState<JobSearchMode>("role");
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
+  const [experience, setExperience] = useState("");
+  const [results, setResults] = useState<JobCard[]>([]);
+  const [searched, setSearched] = useState(false);
 
-  const filteredJobs = useMemo(() => {
-    return JOBS.filter((job) => {
-      const matchesQuery =
-        !query ||
-        job.title.toLowerCase().includes(query.toLowerCase()) ||
-        job.company.toLowerCase().includes(query.toLowerCase());
+  const normalizedQuery = query.trim().toLowerCase();
+  const normalizedLocation = location.trim().toLowerCase();
+  const normalizedExperience = experience.trim().toLowerCase();
 
-      const matchesLocation =
-        !location || job.location.toLowerCase().includes(location.toLowerCase());
+  const demoPool: JobCard[] = useMemo(
+    () => [
+      {
+        id: "1",
+        title: "Design Engineer",
+        company: "ABC Engineering",
+        location: "Pune",
+        workMode: "On-site",
+        experience: "2-4 years",
+        source: "Company Website",
+        applyUrl: "https://example.com/apply/design-engineer",
+        description:
+          "Responsible for design work, technical drawings, and design validation for engineering products."
+      },
+      {
+        id: "2",
+        title: "Project Engineer",
+        company: "Ingersoll Rand",
+        location: "Bangalore",
+        workMode: "On-site",
+        experience: "3-5 years",
+        source: "LinkedIn",
+        applyUrl: "https://example.com/apply/project-engineer",
+        description:
+          "Manage project timelines, cross-functional coordination, documentation, and execution support."
+      },
+      {
+        id: "3",
+        title: "Frontend Developer",
+        company: "TechNova",
+        location: "Remote",
+        workMode: "Remote",
+        experience: "1-3 years",
+        source: "Indeed",
+        applyUrl: "https://example.com/apply/frontend-developer",
+        description:
+          "Build web interfaces with React, improve performance, and collaborate with UI/UX and backend teams."
+      },
+      {
+        id: "4",
+        title: "Backend Developer",
+        company: "CloudAxis",
+        location: "Hyderabad",
+        workMode: "Hybrid",
+        experience: "2-5 years",
+        source: "Company Website",
+        applyUrl: "https://example.com/apply/backend-developer",
+        description:
+          "Develop APIs, manage databases, and build scalable backend systems for enterprise products."
+      },
+      {
+        id: "5",
+        title: "Accountant",
+        company: "Global Finance Hub",
+        location: "Delhi",
+        workMode: "On-site",
+        experience: "1-4 years",
+        source: "Indeed",
+        applyUrl: "https://example.com/apply/accountant",
+        description:
+          "Handle accounting operations, bookkeeping, invoice processing, reconciliations, and reporting."
+      },
+      {
+        id: "6",
+        title: "Data Analyst",
+        company: "Insight Labs",
+        location: "Remote",
+        workMode: "Remote",
+        experience: "0-2 years",
+        source: "LinkedIn",
+        applyUrl: "https://example.com/apply/data-analyst",
+        description:
+          "Analyze business data, create reports and dashboards, and support data-driven decision making."
+      }
+    ],
+    []
+  );
 
-      return matchesQuery && matchesLocation;
+  function handleSearch() {
+    const filtered = demoPool.filter((job) => {
+      const queryMatch =
+        !normalizedQuery ||
+        job.title.toLowerCase().includes(normalizedQuery) ||
+        job.description.toLowerCase().includes(normalizedQuery) ||
+        job.company.toLowerCase().includes(normalizedQuery);
+
+      const locationMatch =
+        !normalizedLocation || job.location.toLowerCase().includes(normalizedLocation);
+
+      const experienceMatch =
+        !normalizedExperience ||
+        job.experience.toLowerCase().includes(normalizedExperience);
+
+      return queryMatch && locationMatch && experienceMatch;
     });
-  }, [query, location]);
 
-  function saveSelectedJob(job: JobItem) {
-    localStorage.setItem("hirvanta_selected_job", JSON.stringify(job));
+    setResults(filtered);
+    setSearched(true);
+  }
+
+  function saveJobToLocal(job: JobCard) {
+    const jobDescription = `
+Job Title: ${job.title}
+Company: ${job.company}
+Location: ${job.location}
+Work Mode: ${job.workMode}
+Experience: ${job.experience}
+Source: ${job.source}
+
+Job Description:
+${job.description}
+    `.trim();
+
+    localStorage.setItem("hirvanta_selected_job_description", jobDescription);
   }
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[28px] bg-white p-6 shadow-soft md:p-8">
-        <h1 className="text-4xl font-bold tracking-tight text-slate-900">
-          Job Finder
-        </h1>
+      <section className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-soft">
+        <h1 className="text-4xl font-bold text-slate-900">Job Finder</h1>
         <p className="mt-2 text-slate-500">
-          Search jobs and send the selected role directly into Resume Builder, Cover Letter, and Interview Coach.
+          Search by role, skill, location, and experience. This page is ready for a real jobs API later, so it does not lock you to one career path.
         </p>
 
-        <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-5">
-          <div className="grid gap-4 md:grid-cols-3">
-            <input
-              className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-brand-500"
-              placeholder="Role (Project Engineer)"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <button
+            onClick={() => setSearchMode("role")}
+            className={`rounded-2xl border p-4 text-left ${
+              searchMode === "role"
+                ? "border-[#2546A8] bg-brand-50 ring-2 ring-[#2546A8]/10"
+                : "border-slate-200 bg-white"
+            }`}
+          >
+            <div className="text-lg font-semibold text-slate-900">Search by Role</div>
+            <div className="mt-1 text-sm text-slate-500">
+              Example: Design Engineer, Accountant, Teacher, Data Analyst
+            </div>
+          </button>
 
-            <input
-              className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-brand-500"
-              placeholder="Location (Bangalore)"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            />
-
-            <button className="rounded-2xl bg-[#2546A8] px-5 py-3 font-semibold text-white transition hover:opacity-90">
-              Search Jobs
-            </button>
-          </div>
+          <button
+            onClick={() => setSearchMode("skill")}
+            className={`rounded-2xl border p-4 text-left ${
+              searchMode === "skill"
+                ? "border-[#2546A8] bg-brand-50 ring-2 ring-[#2546A8]/10"
+                : "border-slate-200 bg-white"
+            }`}
+          >
+            <div className="text-lg font-semibold text-slate-900">Search by Skill</div>
+            <div className="mt-1 text-sm text-slate-500">
+              Example: AutoCAD, Excel, Python, React, Project Management
+            </div>
+          </button>
         </div>
+
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={
+              searchMode === "role"
+                ? "Enter role or job title"
+                : "Enter skill or keyword"
+            }
+            className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-brand-500"
+          />
+
+          <input
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="Location (city, state, country, remote)"
+            className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-brand-500"
+          />
+
+          <input
+            value={experience}
+            onChange={(e) => setExperience(e.target.value)}
+            placeholder="Experience (0-2, 2-5, fresher)"
+            className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-brand-500"
+          />
+        </div>
+
+        <button
+          onClick={handleSearch}
+          className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-[#2546A8] px-6 py-3 font-semibold text-white transition hover:opacity-90"
+        >
+          <Search className="h-4 w-4" />
+          Search Jobs
+        </button>
       </section>
 
       <section className="grid gap-5 xl:grid-cols-2">
-        {filteredJobs.length > 0 ? (
-          filteredJobs.map((job) => (
-            <div
-              key={job.id}
-              className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-soft"
-            >
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900">{job.title}</h3>
-                  <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-500">
-                    <span className="inline-flex items-center gap-2">
-                      <Building2 className="h-4 w-4" />
-                      {job.company}
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <MapPin className="h-4 w-4" />
-                      {job.location}
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <Briefcase className="h-4 w-4" />
-                      {job.type}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-                  Posted {job.posted}
+        {results.map((job) => (
+          <div
+            key={job.id}
+            className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-soft"
+          >
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900">{job.title}</h2>
+                <div className="mt-3 flex flex-wrap gap-4 text-sm text-slate-500">
+                  <span className="inline-flex items-center gap-2">
+                    <Building2 className="h-4 w-4" />
+                    {job.company}
+                  </span>
+                  <span className="inline-flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    {job.location}
+                  </span>
+                  <span className="inline-flex items-center gap-2">
+                    <Briefcase className="h-4 w-4" />
+                    {job.experience}
+                  </span>
                 </div>
               </div>
 
-              <p className="mt-4 line-clamp-3 text-sm leading-7 text-slate-600">
-                {job.description}
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href="/jobs/details"
-                  onClick={() => saveSelectedJob(job)}
-                  className="rounded-2xl bg-[#2546A8] px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90"
-                >
-                  View Details
-                </Link>
-
-                <Link
-                  href="/resume"
-                  onClick={() => saveSelectedJob(job)}
-                  className="inline-flex items-center gap-2 rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
-                >
-                  Tailor Resume
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+              <div className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                {job.workMode}
               </div>
             </div>
-          ))
-        ) : (
-          <div className="rounded-[28px] border border-slate-200 bg-white p-10 text-center shadow-soft xl:col-span-2">
-            <div className="text-xl font-semibold text-slate-900">No jobs found</div>
-            <p className="mt-2 text-slate-500">Try a different role or location.</p>
+
+            <p className="mt-4 text-sm leading-7 text-slate-600">{job.description}</p>
+
+            <div className="mt-4 text-sm text-slate-500">Source: {job.source}</div>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href={job.applyUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-2xl bg-[#2546A8] px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+              >
+                Apply Now
+              </a>
+
+              <Link
+                href="/resume"
+                onClick={() => saveJobToLocal(job)}
+                className="inline-flex items-center gap-2 rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
+              >
+                Tailor Resume
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
+              <Link
+                href="/cover-letter"
+                onClick={() => saveJobToLocal(job)}
+                className="rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
+              >
+                Cover Letter
+              </Link>
+            </div>
           </div>
-        )}
+        ))}
+
+        {searched && results.length === 0 ? (
+          <div className="rounded-[28px] border border-slate-200 bg-white p-10 text-center shadow-soft xl:col-span-2">
+            <div className="text-2xl font-semibold text-slate-900">No jobs found</div>
+            <p className="mt-2 text-slate-500">
+              Try a different title, skill, location, or experience range.
+            </p>
+          </div>
+        ) : null}
+
+        {!searched ? (
+          <div className="rounded-[28px] border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500 shadow-soft xl:col-span-2">
+            Search for any role, skill, location, or experience level to get started.
+          </div>
+        ) : null}
       </section>
     </div>
   );
